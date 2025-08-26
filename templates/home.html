@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Fact App</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <p>This is a test!</p>
+    <h1>Topic: {{ topic }}</h1>
+    <p>Fact: {{ fact }}</p>
+
+    <form method="POST" action="/">
+        <input type="text" name="new_fact" placeholder="Enter a new fact">
+        <button type="submit">Add Fact</button>
+    </form>
+</body>
+
+</html>
