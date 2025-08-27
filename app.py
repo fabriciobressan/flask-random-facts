@@ -57,6 +57,45 @@ def hello_world():
 
     return render_template('home.html', topic=topic, fact=fact)
 
+@app.route('/movie', methods=['GET', 'POST'])
+def movie():
+    api_key = "76c467804bb0474fe96b4b38c3288eba"
+    search_url = "https://api.themoviedb.org/3/search/movie"
+
+    # Default to an empty query.
+    query = ""
+
+    if request.method == 'POST':
+        query = request.form.get('query')
+        if not query:
+            return "No search query provided."
+    else:
+        # For a GET request, we'll use a default search.
+        query = "Indiana Jones"
+
+    params = {
+        'api_key': api_key,
+        'query': query
+    }
+
+    try:
+        response = requests.get(search_url, params=params)
+        response.raise_for_status()
+        
+        data = response.json()
+        if not data['results']:
+            return "No movies found."
+
+        movie_data = data['results'][0]
+        poster_base_url = "https://image.tmdb.org/t/p/w500"
+        poster_url = poster_base_url + movie_data['poster_path']
+
+        return render_template('movie.html', title=movie_data['title'], poster_url=poster_url)
+
+    except requests.exceptions.RequestException as e:
+        print(f"API request failed: {e}")
+        return "Failed to retrieve movie data from API."
+    
 @app.route('/list-facts')
 def list_facts():
     all_facts = Fact.query.all()
