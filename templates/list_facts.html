@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Facts</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <h1>All Facts</h1>
+    {% for fact in facts %}
+        <p><b>{{ fact.topic }}:</b> {{ fact.text }}</p>
+    {% endfor %}
+</body>
+</html>

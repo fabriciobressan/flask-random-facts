@@ -57,6 +57,12 @@ def hello_world():
 
     return render_template('home.html', topic=topic, fact=fact)
 
+@app.route('/list-facts')
+def list_facts():
+    all_facts = Fact.query.all()
+    return render_template('list_facts.html', facts=all_facts)
+
+
 @app.route('/api-fact')
 def api_fact():
     try:
