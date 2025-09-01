@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Random Movie Poster</title>
+    <title>Movie Search</title>
     <link rel="stylesheet" href="static/style.css">
     <style>
-        body { text-align: center; }
-        img { max-width: 500px; height: auto; margin-top: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        body { text-align: center; font-family: Arial, sans-serif; }
         .search-container { margin-bottom: 20px; }
+        .movie-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .movie-card { border: 1px solid #ddd; padding: 10px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: left; }
+        .movie-card img { max-width: 200px; height: auto; border-radius: 4px; }
+        .movie-card h2 { font-size: 1.2em; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -17,7 +20,17 @@
             <button type="submit">Search</button>
         </form>
     </div>
-    <h1>{{ title }}</h1>
-    <img src="{{ poster_url }}" alt="{{ title }} Poster">
+    <div class="movie-list">
+        {% for movie in movies %}
+            <div class="movie-card">
+                <h2>{{ movie.title }}</h2>
+                {% if movie.poster_path %}
+                    <img src="https://image.tmdb.org/t/p/w200/{{ movie.poster_path }}" alt="{{ movie.title }} Poster">
+                {% else %}
+                    <p>Poster not available</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
 </body>
 </html>

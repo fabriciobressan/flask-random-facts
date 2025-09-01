@@ -83,15 +83,13 @@ def movie():
         response.raise_for_status()
         
         data = response.json()
-        if not data['results']:
+        movies = data['results']        
+
+        if not movies:
             return "No movies found."
 
-        movie_data = data['results'][0]
-        poster_base_url = "https://image.tmdb.org/t/p/w500"
-        poster_url = poster_base_url + movie_data['poster_path']
-
-        return render_template('movie.html', title=movie_data['title'], poster_url=poster_url)
-
+        return render_template('movie.html', movies=movies)
+    
     except requests.exceptions.RequestException as e:
         print(f"API request failed: {e}")
         return "Failed to retrieve movie data from API."
